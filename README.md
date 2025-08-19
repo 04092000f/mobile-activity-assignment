@@ -96,7 +96,7 @@ Below are sample comparisons of inference results using the **pre-trained model*
 |-------|------------------|------------------|
 | Sample 1 | ![Pretrained Result 1](visuals/inconsistency1.png) | ![Pretrained Result 1](visuals/consistency.png) |
 | Sample 2 | ![Pretrained Result 2](visuals/inconsistency_worker.png) | ![Fine-tuned Result 2](visuals/consistency_worker.png) |
-| Sample 3 | ![Pretrained Result 3](visuals/static.png) | ![Fine-tuned Result 3](path/to/finetuned_result3.jpg) |
+| Sample 3 | ![Pretrained Result 3](visuals/static.png) | ![Fine-tuned Result 3](visuals/notstatic.png) |
 
 ### Observations  
 - **Pre-trained model**: Inconsistent detection of workers and mobile phones; static mobiles also get detected.  
