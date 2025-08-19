@@ -7,7 +7,7 @@ Such monitoring enables store managers to gain insights into employee activity p
 
 1. [About the Data](#about-the-data)
 2. [Limitations With Pretrained Model](#limitations-with-pretrained-model)
-3. [Need of fine-tuning](#need-for-fine-tuning)
+3. [Need of Fine-Tuning](#need-for-fine-tuning)
 4. [Model and Preprocessing](#model-and-preprocessing)
 5. [Training Configuration](#training-configuration)
 6. [Evaluation Metrics](#evaluation-metrics)
@@ -26,3 +26,15 @@ Such monitoring enables store managers to gain insights into employee activity p
   ![Inconsistency Worker](visuals/inconsistency_worker.png)
 - The model detects **static/idle** mobile phones (e.g., placed on tables), which are **not relevant** for this project, since the focus is only on **active mobile usage** by workers.
   ![Static Device](visuals/static.png)
+
+
+## Need of Fine-Tuning
+
+Given the limitations of pre-trained models, fine-tuning becomes essential to adapt the model for the specific requirements of this project:
+
+- **Domain Adaptation**: Pre-trained models are trained on generic datasets (e.g., COCO, Open Images), which may not fully represent the environment and conditions of our retail store videos. Fine-tuning on custom-labeled data ensures the model learns domain-specific features.
+- **Improved Accuracy**: Fine-tuning helps reduce inconsistencies in detecting workers and mobile phones, leading to more reliable monitoring.
+- **Task-Specific Filtering**: By training on annotated data that excludes static mobiles, the fine-tuned model can focus only on detecting active mobile usage, which is the core requirement of this project.
+- **Robustness Across Variations**: Fine-tuning improves performance across different video qualities, lighting conditions, and camera angles present in the dataset.
+
+
