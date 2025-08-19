@@ -21,8 +21,8 @@ Such monitoring enables store managers to gain insights into employee activity p
 
 ## Limitations With Pretrained Model
 - The pre-trained model shows **inconsistent performance** in detecting mobile phones, making it **unreliable** for tracking actual mobile usage by workers.
-
+![Inconsistency](visuals/inconsistency.png)
 - Worker detection is also **inconsistent** across different videos, leading to gaps in accurate monitoring.
-  
+  ![Inconsistency Worker](visuals/inconsistency_worker.png)
 - The model detects **static/idle** mobile phones (e.g., placed on tables), which are **not relevant** for this project, since the focus is only on **active mobile usage** by workers.
-  
+  ![Static Device](visuals/static.png)
