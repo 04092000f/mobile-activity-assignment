@@ -7,7 +7,7 @@ Such monitoring enables store managers to gain insights into employee activity p
 
 1. [About the Data](#about-the-data)
 2. [Limitations With Pretrained Model](#limitations-with-pretrained-model)
-3. [Need of Fine-Tuning](#need-for-fine-tuning)
+3. [Need of Fine-Tuning](#need-of-fine-tuning)
 4. [Model and Preprocessing](#model-and-preprocessing)
 5. [Training Configuration](#training-configuration)
 6. [Evaluation Metrics](#evaluation-metrics)
