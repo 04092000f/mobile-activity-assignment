@@ -146,7 +146,7 @@ class VideoProcessor:
 
             self.draw_transparent_rect(frame, 45, 30, 500, 140)
             cv2.putText(frame, phone_text, (60, 90),  cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 0, 255), 4, cv2.LINE_AA)
-            cv2.putText(frame, fps_text,   (60, 150), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0cv, 255, 0), 4, cv2.LINE_AA)
+            cv2.putText(frame, fps_text,   (60, 150), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 255, 0), 4, cv2.LINE_AA)
 
             out.write(frame)
 
@@ -157,3 +157,4 @@ class VideoProcessor:
         out.release()
         # Now returning frames_with_phone as well
         return video_name, phone_usage_periods, frame_count, fps, frames_with_phone
+
