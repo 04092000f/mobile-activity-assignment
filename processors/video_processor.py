@@ -1,4 +1,3 @@
-# processors/video_processor.py
 import cv2
 import time
 from utils.box_utils import is_inside, compress_box, iou
@@ -19,7 +18,7 @@ class VideoProcessor:
     def draw_transparent_rect(self, frame, x, y, w, h, color=(0, 0, 0), alpha=0.6):
         """Draw a semi-transparent rectangle on the video frame."""
         overlay = frame.copy()
-        cv2.rectangle(overlay, (x, y), (x + w + 80, y + h), color, -1)
+        cv2.rectangle(overlay, (x, y), (x + w + 110, y + h), color, -1)
         cv2.addWeighted(overlay, alpha, frame, 1 - alpha, 0, frame)
 
     def process(self, video_path: str, output_path: str):
@@ -157,4 +156,3 @@ class VideoProcessor:
         out.release()
         # Now returning frames_with_phone as well
         return video_name, phone_usage_periods, frame_count, fps, frames_with_phone
-
