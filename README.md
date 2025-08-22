@@ -147,11 +147,13 @@ This pipeline detects and tracks **employee mobile phone usage** in retail video
    - Semi-transparent background improves readability.  
 
 7. **Export Results**  
-   - Annotated video : `output_videos/`.  
-   - Example CSV summary with columns:  
+   - Annotated video: `output_videos/`.  
+   - Example CSV summary with columns:
+
 | video_name | start_frame | end_frame | start_sec | end_sec | total_frames | frames_with_phone | usage_percentage |
 |------------|-------------|-----------|-----------|---------|--------------|-------------------|------------------|
 | video1.mp4 | 36          | 96        | 3.0       | 8.0     | 120          | 60                | 50.0%            |
+
 
 
 
