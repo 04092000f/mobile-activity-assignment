@@ -1,111 +1,158 @@
-# Mobile Activity Monitoring
-In modern retail environments, employee productivity and customer service quality play a crucial role in overall store performance. However, the increasing use of mobile phones during work hours can lead to distractions, reduced efficiency, and a negative impact on customer experience. To address this challenge, mobile activity detection systems are being developed to monitor and analyze employee behavior in retail stores.
+# Mobile Activity Monitoring  
 
-The objective of this project is to build an intelligent computer vision–based system that can detect and classify mobile phone usage activities, such as calling, texting, or browsing—by employees during working hours. Using techniques like object detection, action recognition, and deep learning models, the system can automatically identify instances of mobile usage in real time from CCTV footage.
+In modern retail environments, employee productivity and customer service quality directly influence store performance. However, the increasing use of mobile phones during work hours often results in distractions, reduced efficiency, and a negative impact on customer experience.  
 
-Such monitoring enables store managers to gain insights into employee activity patterns, enforce compliance with workplace policies, and ensure better customer engagement, ultimately improving operational efficiency and customer satisfaction.
+To address this challenge, we propose a **computer vision–based system** that can detect and classify mobile phone usage activities—such as calling, texting, or browsing—by employees during working hours. By leveraging **object detection, action recognition, and deep learning**, the system can automatically identify instances of mobile usage in real time from CCTV footage.  
+
+This monitoring framework enables store managers to gain insights into employee activity patterns, enforce compliance with workplace policies, and ultimately ensure better customer engagement and operational efficiency.  
 
 ---
-## Table of Contents
-1. [About the Data](#about-the-data)
-2. [Limitations With Pretrained Model](#limitations-with-pretrained-model)
-3. [Need of Fine-Tuning](#need-of-fine-tuning)
-4. [Preprocessing and Model Training](#preprocessing-and-model-training)
-5. [Evaluation Metrics](#evaluation-metrics)
-6. [Inference Results](#inference-results)
-7. [Using Mediapipe for Tracking Mobile Usage](#using-mediapipe-for-tracking-mobile-usage)
+
+## Table of Contents  
+1. [About the Data](#about-the-data)  
+2. [Limitations of Pretrained Model](#limitations-of-pretrained-model)  
+3. [Need for Fine-Tuning](#need-for-fine-tuning)  
+4. [Preprocessing and Model Training](#preprocessing-and-model-training)  
+5. [Evaluation Metrics](#evaluation-metrics)  
+6. [Inference Results](#inference-results)  
+7. [Workflow for Tracking Mobile Usage](#workflow-for-tracking-mobile-usage)  
+8. [Installations and Code Usage](#installations-and-code-usage)  
+
 ---
 
-### About the Data
-- The dataset consists of **6 videos** in formats such as MP4, AVI, MOV, and MKV.
-- Out of these, **4 videos** were used for **training**, **1 video** for **validation** and **1 video** for **testing** on unseen data.
-- The dataset was annotated using **Roboflow**, and the annotations were exported in the **YOLOv11** format.
+## About the Data  
+
+- Dataset contains **6 videos** in MP4, AVI, MOV, and MKV formats.  
+- Split: **4 videos** for **training**, **1** for **validation**, and **1** for **testing**.  
+- Annotation performed using **Roboflow** and exported in **YOLOv11** format.  
+
 ---
 
-### Limitations With Pretrained Model
-- The pre-trained model shows **inconsistent performance** in detecting mobile phones, making it **unreliable** for tracking actual mobile usage by workers.
-![Inconsistency](visuals/inconsistency.png)
-- Worker detection is also **inconsistent** across different videos, leading to gaps in accurate monitoring.
-  ![Inconsistency Worker](visuals/inconsistency_worker.png)
-- The model detects **static/idle** mobile phones (e.g., placed on tables), which are **not relevant** for this project, since the focus is only on **active mobile usage** by workers.
-  ![Static Device](visuals/static.png)
+## Limitations of Pretrained Model  
+
+- **Inconsistent detections** for mobile phones across frames.  
+- **Unreliable worker detection** in different videos.  
+- **Static phones** (e.g., left on tables) are wrongly detected as active usage.  
+
+Examples:  
+- ![Inconsistency](visuals/inconsistency.png)  
+- ![Inconsistency Worker](visuals/inconsistency_worker.png)  
+- ![Static Device](visuals/static.png)  
+
 ---
 
-### Need of Fine-Tuning
+## Need for Fine-Tuning  
 
-Given the limitations of pre-trained models, fine-tuning becomes essential to adapt the model for the specific requirements of this project:
+Fine-tuning is essential to adapt YOLO for this domain-specific problem:  
 
-- **Domain Adaptation**: Pre-trained models are trained on generic datasets (e.g., COCO, Open Images), which may not fully represent the environment and conditions of our retail store videos. Fine-tuning on custom-labeled data ensures the model learns domain-specific features.
-- **Improved Accuracy**: Fine-tuning helps reduce inconsistencies in detecting workers and mobile phones, leading to more reliable monitoring.
-- **Task-Specific Filtering**: By training on annotated data that excludes static mobiles, the fine-tuned model can focus only on detecting active mobile usage, which is the core requirement of this project.
-- **Robustness Across Variations**: Fine-tuning improves performance across different video qualities, lighting conditions, and camera angles present in the dataset.
+- **Domain Adaptation**: Trains the model to retail-specific environments and conditions.  
+- **Improved Accuracy**: Reduces inconsistent detections for both workers and phones.  
+- **Task-Specific Filtering**: Ignores static/idle phones, focusing only on active usage.  
+- **Robustness**: Handles varied lighting, camera angles, and video quality.  
+
 ---
 
-### Preprocessing and Model Training
-To ensure better generalization and robustness, the dataset was preprocessed and augmented before model training. The following steps were applied:
+## Preprocessing and Model Training  
 
-#### Preprocessing
+### Preprocessing  
 
-- **Histogram Equalization**: Applied to achieve uniform image contrast across frames.
+- **Histogram Equalization** for uniform contrast.  
+- **Augmentations**:  
+  - Horizontal Flip → simulates mirrored views.  
+  - Blur (≤0.8 px) → accounts for motion blur.  
+  - Noise (≤4.2% pixels) → improves robustness.  
+  - Mosaic Augmentation → better contextual learning.  
+- **Bounding Box Augmentations**:  
+  - Brightness adjustments (0% → +37%).  
+  - Localized blur within bounding boxes (≤0.6 px).  
 
-- **Data Augmentation**
+### Model Training  
 
-  -  **Horizontal Flip**: To simulate **mirrored** viewpoints of workers.
+- Model: **YOLOv11** (fine-tuned).  
+- Input size: **1088 × 1088**.  
+- Dataset: Annotated and exported via **Roboflow**.  
 
-  - **Blur(Up to 0.8 px)**: To handle **slight motion blur** in videos.
-
-  - **Noise(Up to 4.21% of pixels)**: To make the model robust against noisy video frames.
-
-  - **Mosaic Augmentation**: To improve context learning by combining multiple images into one.
-
-- **Bounding Box Augmentations**:
-
-  - **Brightness Adjustment**: Between 0% and +37% to account for varying lighting conditions.
-
-  - **Blur** – Up to 0.6 px applied within bounding boxes for robustness.
- 
-
-#### Model Training
-
-- The model was trained using **YOLOv11**.
-
-- Input image size was set to **1088 × 1088** for improved **generalization** and detection **accuracy**.
-
-- Training was conducted on the **annotated** dataset exported from **Roboflow**.
 ---
 
+## Evaluation Metrics  
 
-### Evaluation Metrics  
-The performance of the fine-tuned **YOLOv11s** model was evaluated on the test dataset consisting of **180 images** from the test video.  
+Tested on **180 images** from the unseen test video:  
 
 | Class   | Precision (P) | Recall (R) | mAP@50 | mAP@50-95 |
 |---------|---------------|------------|--------|-----------|
 | Mobile  | 0.997         | 0.993      | 0.995  | 0.839     |
 | Worker  | 0.997         | 0.999      | 0.995  | 0.897     |
-| Overall | 0.997         | 0.996      | 0.995  | 0.868     |
+| **Overall** | **0.997** | **0.996** | **0.995** | **0.868** |
 
-#### Key Observations
+**Key Insights**:  
+- Very high **precision/recall ≥0.99** → reliable detection.  
+- **mAP@50 = 0.995** → strong localization performance.  
+- **mAP@50-95** slightly lower (expected due to stricter IoU thresholds).  
+- Significant improvement over pre-trained baseline, especially in ignoring static phones.  
 
-- The model achieved **very high precision** and **recall** (**≥0.99**) for both classes, indicating reliable detection with minimal false positives/negatives.
-
-- **mAP@50** is consistently **0.995**, reflecting strong object localization.
-
-- **mAP@50-95** scores are slightly lower (0.839 for mobile, 0.897 for worker), which is expected due to stricter IoU thresholds, but still demonstrate excellent performance.
-
-- The fine-tuned model significantly improves over pre-trained baselines, particularly in filtering out static mobiles and ensuring consistent worker detection.
 ---
 
-### Inference Results  
+## Inference Results  
 
-Below are sample comparisons of inference results using the **pre-trained model** and the **fine-tuned model**:  
+Comparison of **pre-trained vs fine-tuned model**:  
 
 | Image | Pre-trained Model | Fine-tuned Model |
 |-------|------------------|------------------|
-| Sample 1 | ![Pretrained Result 1](visuals/inconsistency1.png) | ![Pretrained Result 1](visuals/consistency.png) |
+| Sample 1 | ![Pretrained Result 1](visuals/inconsistency1.png) | ![Fine-tuned Result 1](visuals/consistency.png) |
 | Sample 2 | ![Pretrained Result 2](visuals/inconsistency_worker.png) | ![Fine-tuned Result 2](visuals/consistency_worker.png) |
 | Sample 3 | ![Pretrained Result 3](visuals/static.png) | ![Fine-tuned Result 3](visuals/notstatic.png) |
 
-#### Observations  
-- **Pre-trained model**: Inconsistent detection of workers and mobile phones; static mobiles also get detected.  
-- **Fine-tuned model**: More consistent worker detection, only active mobile usage is detected, and false positives are reduced.
+**Observations**:  
+- Pretrained → inconsistent detection + static phone errors.  
+- Fine-tuned → consistent worker detection + only active usage detected.  
+
 ---
+
+## Workflow for Tracking Mobile Usage  
+
+This pipeline detects and tracks **employee mobile phone usage** in retail videos.  
+
+1. **Model Loading**  
+   - Load YOLO model (`.pt` / `.onnx`).  
+   - If `.onnx` missing, auto-export from `.pt`.  
+   - Map classes → `worker`, `mobile`.  
+
+2. **Frame Processing**  
+   - Read video frame-by-frame.  
+   - Run YOLOv11 inference.  
+   - Extract bounding boxes for both classes.  
+
+3. **Phone Usage Detection**  
+   - `is_inside()` checks if mobile is within worker’s box.  
+   - Worker box compressed via `compress_box()` for stricter overlap.  
+   - If overlap → mark as **phone usage**.  
+
+4. **Buffer & IoU Validation**  
+   - Prevents false negatives when phones disappear briefly.  
+   - Uses buffer of past frames + IoU checks.  
+
+5. **Tracking & Statistics**  
+   - Logs start & end frames of phone usage.  
+   - Computes:  
+     - Total usage time (s).  
+     - Frames with usage.  
+     - Usage % of total video.  
+
+6. **Overlay on Video**  
+   - Bounding boxes:  
+     - 🔴 Red → Worker using phone.  
+   - Live overlay:  
+     - Phone Usage Time (s).  
+     - FPS.  
+   - Semi-transparent background improves readability.  
+
+7. **Export Results**  
+   - Annotated video → `output_videos/`.  
+   - CSV summary with columns:  
+   ```
+   |video_name | start_frame | end_frame | start_sec | end_sec | total_frames | frames_with_phone | usage_percentage|
+   |-----------|-------------|-----------|-----------|---------|--------------|-------------------|-----------------|
+   |video1.mp4 | 36 | 96 | 3.0 | 8.0 | 120 | 60 | 50.0%|
+
+   
+
