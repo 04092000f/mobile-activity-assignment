@@ -182,5 +182,5 @@ This pipeline detects and tracks **employee mobile phone usage** in retail video
   - `--buffer_frames` : No of frames to keep the flag of mobile usage as **True** to handle occlusions on mobile.
   - `--compression` : Compression ratio of worker bounding box. This will shrink the bounding box of the worker to avoid any overlaps with the other worker bounding box which can gnerate false positives.
 
--Otuput videos and logs are saved in the `output_videos` directory
+- Output videos and logs are saved in the `output_videos` directory
 
