@@ -186,5 +186,5 @@ This pipeline detects and tracks **employee mobile phone usage** in retail video
 
 ## Output Video Demonstration
 - Output Video Demonstration is shown below:
-[Fine-tuned Result 3](visuals/final.gif)
+![Fine-tuned Result 3](visuals/final.gif)
 
