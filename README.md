@@ -16,7 +16,8 @@ This monitoring framework enables store managers to gain insights into employee 
 5. [Evaluation Metrics](#evaluation-metrics)  
 6. [Inference Results](#inference-results)  
 7. [Workflow for Tracking Mobile Usage](#workflow-for-tracking-mobile-usage)  
-8. [Installations and Code Usage](#installations-and-code-usage)  
+8. [Installations and Code Usage](#installations-and-code-usage)
+9. [Output Video Demonstration](#output-video-demonstration) 
 
 ---
 
@@ -156,6 +157,30 @@ This pipeline detects and tracks **employee mobile phone usage** in retail video
 
 
 
+## Installations and Code Usage
+- To run the project in your device, download the zip file of this repository or clone the repository using `git clone` command in **GIT CLI**.
+  ```
+  git clone https://github.com/04092000f/mobile-activity-assignment.git
+  ```
+- If the download has been done locally, then extract the files from the zip file.
+- Open CLI and navigate to the project directory using `cd` command.
+  ```
+  cd mobile-activity-assignment
+- Install the project dependencies using `pip install` command.
+  ```
+  pip install -r requirements.txt
+  ```
+- After the installation run the main python command to process the input video and get the final results.
+- **Command**:
+  ```
+  python main.py --input videos --output output_videos --iou_thresh 0.4 --buffer_frames 24 --compression 0.1
+  ```
+- Explanations of the command
+  - `--input` : input videos directory.
+  - `--output` : output directory which will store final processed videos and logs. Logs are saved in `.csv` file.
+  - `--iou_thresh` : IoU threshold for buffer frames.
+  - `--buffer_frames` : No of frames to keep the flag of mobile usage as **True** to handle occlusions on mobile.
+  - `--compression` : Compression ratio of worker bounding box. This will shrink the bounding box of the worker to avoid any overlaps with the other worker bounding box which can gnerate false positives.
 
-   
+-Otuput videos and logs are saved in the `output_videos` directory
 
