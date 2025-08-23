@@ -101,7 +101,7 @@ Comparison of **pre-trained vs fine-tuned model**:
 |-------|------------------|------------------|
 | Sample 1 | ![Pretrained Result 1](visuals/inconsistency1.png) | ![Fine-tuned Result 1](visuals/consistency.png) |
 | Sample 2 | ![Pretrained Result 2](visuals/inconsistency_worker.png) | ![Fine-tuned Result 2](visuals/consistency_worker.png) |
-| Sample 3 | ![Pretrained Result 3](visuals/static.png) | ![Fine-tuned Result 3](visuals/notstatic.png) |
+| Sample 3 | ![Pretrained Result 3](visuals/static.png) | ![Fine-tuned Result 3](visuals/notstatic.png)|
 
 **Observations**:  
 - Pretrained → inconsistent detection + static phone errors.  
@@ -183,4 +183,8 @@ This pipeline detects and tracks **employee mobile phone usage** in retail video
   - `--compression` : Compression ratio of worker bounding box. This will shrink the bounding box of the worker to avoid any overlaps with the other worker bounding box which can gnerate false positives.
 
 - Output videos and logs are saved in the `output_videos` directory
+
+## Output Video Demonstration
+- Output Video Demonstration is shown below:
+[Fine-tuned Result 3](visuals/final.gif)
 
